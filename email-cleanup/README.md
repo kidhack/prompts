@@ -12,7 +12,7 @@ At the end, you will get a summary with categories, counts, and resubscribe link
 
 Paste the prompt below into a coding agent that can run scripts, access IMAP/SMTP, and generate files.
 
-It was tested with **Claude Cowork**, but it should also work with:
+It was tested with **Claude Cowork**. It likely also works with **Claude Code** and other coding agents such as:
 
 - Cursor Agent
 - OpenAI Codex / ChatGPT agent with terminal access
