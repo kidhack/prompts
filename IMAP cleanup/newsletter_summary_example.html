@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Cleanup Summary — Example</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.5; }
+
+  .header { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; padding: 40px 48px; }
+  .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+  .header p { color: #94a3b8; font-size: 15px; }
+  .stats { display: flex; gap: 24px; margin-top: 24px; flex-wrap: wrap; }
+  .stat { background: rgba(255,255,255,0.1); border-radius: 10px; padding: 14px 20px; min-width: 120px; }
+  .stat-num { font-size: 28px; font-weight: 700; }
+  .stat-label { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+
+  .demo-banner { background: #ede9fe; border-left: 4px solid #7c3aed; padding: 13px 20px; margin: 20px 48px 0; border-radius: 4px; font-size: 13px; color: #5b21b6; }
+
+  .notice { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 14px 20px; margin: 16px 48px; border-radius: 4px; font-size: 14px; color: #92400e; }
+
+  .toc { padding: 20px 48px; display: flex; flex-wrap: wrap; gap: 8px; border-bottom: 1px solid #e2e8f0; }
+  .toc a { text-decoration: none; background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 5px 14px; font-size: 13px; color: #334155; white-space: nowrap; transition: all 0.15s; }
+  .toc a:hover { background: #f1f5f9; border-color: #94a3b8; }
+
+  .section { margin: 32px 48px; }
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 2px solid; }
+  .section-header h2 { font-size: 19px; font-weight: 700; }
+  .section-note { font-size: 13px; color: #64748b; margin-bottom: 14px; padding: 10px 14px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+  .card { background: white; border-radius: 10px; padding: 16px 18px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 6px; transition: box-shadow 0.15s; }
+  .card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .sender-name { font-weight: 600; font-size: 15px; color: #0f172a; }
+  .badge { font-size: 11px; background: #f1f5f9; color: #64748b; border-radius: 10px; padding: 2px 8px; white-space: nowrap; flex-shrink: 0; }
+  .sender-email { font-size: 12px; color: #94a3b8; }
+  .subjects { margin: 2px 0; }
+  .subjects li { list-style: none; font-size: 12px; color: #64748b; padding-left: 12px; position: relative; line-height: 1.6; }
+  .subjects li::before { content: "•"; position: absolute; left: 0; color: #cbd5e1; }
+  .card-actions { display: flex; align-items: center; gap: 10px; margin-top: 6px; flex-wrap: wrap; }
+  .resub-btn { display: inline-block; background: #3b82f6; color: white; text-decoration: none; border-radius: 6px; padding: 5px 12px; font-size: 13px; font-weight: 500; transition: background 0.15s; }
+  .resub-btn:hover { background: #2563eb; }
+  .website-link { font-size: 12px; color: #64748b; text-decoration: none; }
+  .website-link:hover { color: #3b82f6; text-decoration: underline; }
+  .no-link { font-size: 12px; color: #cbd5e1; font-style: italic; }
+  .spam-note { font-size: 12px; color: #94a3b8; font-style: italic; }
+
+  footer { text-align: center; padding: 32px; color: #94a3b8; font-size: 13px; border-top: 1px solid #e2e8f0; margin-top: 20px; }
+  footer a { color: #94a3b8; }
+
+  @media(max-width: 640px) {
+    .header, .section, .toc, .notice, .demo-banner { padding-left: 20px; padding-right: 20px; }
+    .section { margin-left: 16px; margin-right: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📬 Email Cleanup Summary</h1>
+  <p>your@email.com &nbsp;·&nbsp; Cleaned up March 2026</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-num">84</div><div class="stat-label">Unique Lists</div></div>
+    <div class="stat"><div class="stat-num">3,200+</div><div class="stat-label">Emails Removed</div></div>
+    <div class="stat"><div class="stat-num">68</div><div class="stat-label">With Resubscribe Links</div></div>
+    <div class="stat"><div class="stat-num">94</div><div class="stat-label">Kept in Inbox</div></div>
+  </div>
+</div>
+
+<div class="demo-banner">
+  <strong>📋 This is an example file.</strong> Your actual summary will list the real newsletters unsubscribed from your account, organized into these same categories with personalized resubscribe links.
+</div>
+
+<div class="notice">
+  💡 To resubscribe to any list, click the <strong>↩ Resubscribe</strong> button. Political campaign emails are listed near the bottom. Investment newsletters are marked as not recommended.
+</div>
+
+<div class="toc">
+  <a href="#news">📰 News &amp; Media</a>
+  <a href="#design">✏️ Design &amp; Creative</a>
+  <a href="#shopping">🛍️ Shopping &amp; Retail</a>
+  <a href="#local">🗽 Local NYC &amp; Community</a>
+  <a href="#health">🏥 Health &amp; Wellness</a>
+  <a href="#environment">🌎 Environment &amp; Advocacy</a>
+  <a href="#food">🍽️ Food &amp; Dining</a>
+  <a href="#finance">💰 Finance &amp; Utilities</a>
+  <a href="#arts">🎨 Arts &amp; Culture</a>
+  <a href="#political">🗳️ Political Campaigns</a>
+  <a href="#investment">📈 Investment Newsletters</a>
+  <a href="#other">❓ Other</a>
+</div>
+
+
+<!-- ── NEWS & MEDIA ───────────────────────────────────────────────────────── -->
+<div class="section" id="news">
+  <div class="section-header" style="border-color:#3b82f6">
+    <h2 style="color:#3b82f6">📰 News &amp; Media</h2>
+    <span class="badge">7 lists</span>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">The New York Times</div><span class="badge">38 emails</span></div>
+      <div class="sender-email">nytdirect@nytimes.com</div>
+      <ul class="subjects"><li>The Morning newsletter</li><li>Breaking news alerts</li></ul>
+      <div class="card-actions">
+        <a href="https://www.nytimes.com/newsletters" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://nytimes.com" target="_blank" class="website-link">nytimes.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">The Atlantic</div><span class="badge">12 emails</span></div>
+      <div class="sender-email">newsletters@theatlantic.com</div>
+      <ul class="subjects"><li>Ideas &amp; culture dispatch</li><li>The Weekly Planet</li></ul>
+      <div class="card-actions">
+        <a href="https://www.theatlantic.com/newsletters/" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://theatlantic.com" target="_blank" class="website-link">theatlantic.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">The Washington Post</div><span class="badge">9 emails</span></div>
+      <div class="sender-email">newsletters@washingtonpost.com</div>
+      <ul class="subjects"><li>Today's Headlines</li><li>The Optimist newsletter</li></ul>
+      <div class="card-actions">
+        <a href="https://www.washingtonpost.com/newsletters/" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://washingtonpost.com" target="_blank" class="website-link">washingtonpost.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">The Cut (NY Mag)</div><span class="badge">14 emails</span></div>
+      <div class="sender-email">thecut@newsletters.nymag.com</div>
+      <ul class="subjects"><li>Today in culture &amp; style</li><li>Ask a Boss column</li></ul>
+      <div class="card-actions">
+        <a href="https://www.thecut.com/newsletters" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://thecut.com" target="_blank" class="website-link">thecut.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Curbed (NY Mag)</div><span class="badge">8 emails</span></div>
+      <div class="sender-email">curbed@newsletters.nymag.com</div>
+      <ul class="subjects"><li>NYC real estate &amp; city life</li><li>The Market newsletter</li></ul>
+      <div class="card-actions">
+        <a href="https://www.curbed.com/newsletters" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://curbed.com" target="_blank" class="website-link">curbed.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Gothamist</div><span class="badge">11 emails</span></div>
+      <div class="sender-email">newsletter@gothamist.com</div>
+      <ul class="subjects"><li>NYC daily news digest</li><li>Weekend picks</li></ul>
+      <div class="card-actions">
+        <a href="https://gothamist.com/newsletters" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://gothamist.com" target="_blank" class="website-link">gothamist.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Apple News+</div><span class="badge">9 emails</span></div>
+      <div class="sender-email">newsdigest@insideapple.apple.com</div>
+      <ul class="subjects"><li>Good Morning from Apple News</li><li>Popular stories this week</li></ul>
+      <div class="card-actions">
+        <a href="https://support.apple.com/apple-news" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://apple.com/apple-news" target="_blank" class="website-link">apple.com/apple-news</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ── DESIGN & CREATIVE ──────────────────────────────────────────────────── -->
+<div class="section" id="design">
+  <div class="section-header" style="border-color:#7c3aed">
+    <h2 style="color:#7c3aed">✏️ Design &amp; Creative</h2>
+    <span class="badge">8 lists</span>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">It's Nice That</div><span class="badge">22 emails</span></div>
+      <div class="sender-email">newsletter@itsnicethat.com</div>
+      <ul class="subjects"><li>Today's creative inspiration</li><li>Graduate showcases 2026</li></ul>
+      <div class="card-actions">
+        <a href="https://www.itsnicethat.com/newsletters" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://itsnicethat.com" target="_blank" class="website-link">itsnicethat.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">AIGA Eye on Design</div><span class="badge">8 emails</span></div>
+      <div class="sender-email">eyeondesign@aiga.org</div>
+      <ul class="subjects"><li>Why this logo works</li><li>The future of type design</li></ul>
+      <div class="card-actions">
+        <a href="https://eyeondesign.aiga.org/newsletter/" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://aiga.org" target="_blank" class="website-link">aiga.org</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Dezeen</div><span class="badge">17 emails</span></div>
+      <div class="sender-email">info@dezeen.com</div>
+      <ul class="subjects"><li>Weekly design &amp; architecture</li><li>New products &amp; interiors</li></ul>
+      <div class="card-actions">
+        <a href="https://www.dezeen.com/newsletter/" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://dezeen.com" target="_blank" class="website-link">dezeen.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Fonts In Use</div><span class="badge">5 emails</span></div>
+      <div class="sender-email">hello@fontsinuse.com</div>
+      <ul class="subjects"><li>New typography sightings</li><li>Featured: editorial identity system</li></ul>
+      <div class="card-actions">
+        <a href="https://fontsinuse.com" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://fontsinuse.com" target="_blank" class="website-link">fontsinuse.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Creative Boom</div><span class="badge">11 emails</span></div>
+      <div class="sender-email">newsletter@creativeboom.com</div>
+      <ul class="subjects"><li>Inspiring creative work &amp; careers</li><li>How to deal with creative burnout</li></ul>
+      <div class="card-actions">
+        <a href="https://www.creativeboom.com/newsletter/" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://creativeboom.com" target="_blank" class="website-link">creativeboom.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">NY Design Week (ICFF)</div><span class="badge">4 emails</span></div>
+      <div class="sender-email">info@icff.com</div>
+      <ul class="subjects"><li>ICFF 2026 exhibitor preview</li><li>NYCxDesign events guide</li></ul>
+      <div class="card-actions">
+        <a href="https://www.icff.com" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://icff.com" target="_blank" class="website-link">icff.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Architizer</div><span class="badge">9 emails</span></div>
+      <div class="sender-email">editorial@architizer.com</div>
+      <ul class="subjects"><li>Best new buildings of the week</li><li>A+Awards finalists announced</li></ul>
+      <div class="card-actions">
+        <a href="https://architizer.com/blog/practice/tools/architizer-newsletter/" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://architizer.com" target="_blank" class="website-link">architizer.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Dribbble</div><span class="badge">6 emails</span></div>
+      <div class="sender-email">hello@dribbble.com</div>
+      <ul class="subjects"><li>Shots we love this week</li><li>New jobs for designers</li></ul>
+      <div class="card-actions">
+        <a href="https://dribbble.com/newsletters" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://dribbble.com" target="_blank" class="website-link">dribbble.com</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ── SHOPPING & RETAIL ──────────────────────────────────────────────────── -->
+<div class="section" id="shopping">
+  <div class="section-header" style="border-color:#f59e0b">
+    <h2 style="color:#f59e0b">🛍️ Shopping &amp; Retail</h2>
+    <span class="badge">9 lists</span>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">MoMA Design Store</div><span class="badge">6 emails</span></div>
+      <div class="sender-email">momadesignstore@email.momastore.org</div>
+      <ul class="subjects"><li>New arrivals in the design collection</li><li>Members-only preview sale</li></ul>
+      <div class="card-actions">
+        <a href="https://store.moma.org" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://store.moma.org" target="_blank" class="website-link">store.moma.org</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">McNally Jackson Books</div><span class="badge">4 emails</span></div>
+      <div class="sender-email">info@mcnallyjackson.com</div>
+      <ul class="subjects"><li>Staff picks this week</li><li>Author reading: Tuesday @ Seaport</li></ul>
+      <div class="card-actions">
+        <a href="https://www.mcnallyjackson.com/newsletter" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://mcnallyjackson.com" target="_blank" class="website-link">mcnallyjackson.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Ace Hotel</div><span class="badge">3 emails</span></div>
+      <div class="sender-email">newsletter@acehotel.com</div>
+      <ul class="subjects"><li>What's on at Ace NYC this month</li><li>New residency announced</li></ul>
+      <div class="card-actions">
+        <a href="https://www.acehotel.com" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://acehotel.com" target="_blank" class="website-link">acehotel.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Aesop</div><span class="badge">5 emails</span></div>
+      <div class="sender-email">communications@aesop.com</div>
+      <ul class="subjects"><li>A ritual for spring</li><li>New formulations for face</li></ul>
+      <div class="card-actions">
+        <a href="https://www.aesop.com/us/r/newsletter-signup/" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://aesop.com" target="_blank" class="website-link">aesop.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Muji</div><span class="badge">4 emails</span></div>
+      <div class="sender-email">newsletter@muji.com</div>
+      <ul class="subjects"><li>New season essentials</li><li>In-store event: Chelsea location</li></ul>
+      <div class="card-actions">
+        <a href="https://www.muji.com/us/feature/email-signup.html" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://muji.com" target="_blank" class="website-link">muji.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Strand Bookstore</div><span class="badge">5 emails</span></div>
+      <div class="sender-email">info@strandbooks.com</div>
+      <ul class="subjects"><li>18 miles of books &amp; new arrivals</li><li>Signed edition just in</li></ul>
+      <div class="card-actions">
+        <a href="https://www.strandbooks.com/newsletter" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://strandbooks.com" target="_blank" class="website-link">strandbooks.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">eBay</div><span class="badge">3 emails</span></div>
+      <div class="sender-email">ebay@reply.ebay.com</div>
+      <ul class="subjects"><li>Price drop on your watched items</li><li>Deals picked for you</li></ul>
+      <div class="card-actions">
+        <a href="https://pages.ebay.com/personalization/" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://ebay.com" target="_blank" class="website-link">ebay.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">1stDibs</div><span class="badge">4 emails</span></div>
+      <div class="sender-email">hello@email.1stdibs.com</div>
+      <ul class="subjects"><li>Curated vintage &amp; antique finds</li><li>New from top dealers</li></ul>
+      <div class="card-actions">
+        <a href="https://www.1stdibs.com" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://1stdibs.com" target="_blank" class="website-link">1stdibs.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Allrecipes</div><span class="badge">4 emails</span></div>
+      <div class="sender-email">allrecipes@email.allrecipes.com</div>
+      <ul class="subjects"><li>Weeknight dinners under 30 min</li><li>Spring produce recipes</li></ul>
+      <div class="card-actions">
+        <a href="https://www.allrecipes.com/newsletter/" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://allrecipes.com" target="_blank" class="website-link">allrecipes.com</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ── LOCAL NYC & COMMUNITY ──────────────────────────────────────────────── -->
+<div class="section" id="local">
+  <div class="section-header" style="border-color:#10b981">
+    <h2 style="color:#10b981">🗽 Local NYC &amp; Community</h2>
+    <span class="badge">8 lists</span>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Brooklyn Academy of Music (BAM)</div><span class="badge">7 emails</span></div>
+      <div class="sender-email">newsletter@bam.org</div>
+      <ul class="subjects"><li>Spring season lineup announced</li><li>Tickets on sale: Next Wave Festival</li></ul>
+      <div class="card-actions">
+        <a href="https://www.bam.org/email-signup" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://bam.org" target="_blank" class="website-link">bam.org</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">The Public Theater</div><span class="badge">5 emails</span></div>
+      <div class="sender-email">info@publictheater.org</div>
+      <ul class="subjects"><li>Shakespeare in the Park tickets open</li><li>New season announcement</li></ul>
+      <div class="card-actions">
+        <a href="https://publictheater.org/tickets-memberships/email-list/" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://publictheater.org" target="_blank" class="website-link">publictheater.org</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">NYC Audubon Society</div><span class="badge">3 emails</span></div>
+      <div class="sender-email">newsletter@nycaudubon.org</div>
+      <ul class="subjects"><li>Spring migration birdwatching events</li><li>Central Park nature walks</li></ul>
+      <div class="card-actions">
+        <a href="https://www.nycaudubon.org/newsletter" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://nycaudubon.org" target="_blank" class="website-link">nycaudubon.org</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Brooklyn Flea &amp; Smorgasburg</div><span class="badge">6 emails</span></div>
+      <div class="sender-email">info@brooklynflea.com</div>
+      <ul class="subjects"><li>Opening weekend: Williamsburg location</li><li>New vendors this season</li></ul>
+      <div class="card-actions">
+        <a href="https://www.brooklynflea.com/newsletter/" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://brooklynflea.com" target="_blank" class="website-link">brooklynflea.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">TimeOut New York</div><span class="badge">10 emails</span></div>
+      <div class="sender-email">newsletter@timeout.com</div>
+      <ul class="subjects"><li>Best things to do in NYC this weekend</li><li>The 50 best NYC restaurants right now</li></ul>
+      <div class="card-actions">
+        <a href="https://www.timeout.com/newyork/subscribe-to-timeout-new-york-newsletter" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://timeout.com/newyork" target="_blank" class="website-link">timeout.com/newyork</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Nextdoor (NYC Neighborhood)</div><span class="badge">4 emails</span></div>
+      <div class="sender-email">reply@rs.email.nextdoor.com</div>
+      <ul class="subjects"><li>Spotted: new coffee shop on Bedford Ave</li><li>Community board meeting Tuesday</li></ul>
+      <div class="card-actions">
+        <a href="https://nextdoor.com" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://nextdoor.com" target="_blank" class="website-link">nextdoor.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Pioneer Works</div><span class="badge">3 emails</span></div>
+      <div class="sender-email">info@pioneerworks.org</div>
+      <ul class="subjects"><li>Open House this Sunday in Red Hook</li><li>New residency cohort announced</li></ul>
+      <div class="card-actions">
+        <a href="https://pioneerworks.org/newsletter" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://pioneerworks.org" target="_blank" class="website-link">pioneerworks.org</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">WNYC (Public Radio)</div><span class="badge">5 emails</span></div>
+      <div class="sender-email">newsletter@wnyc.org</div>
+      <ul class="subjects"><li>Radiolab new episode</li><li>The Brian Lehrer Show recap</li></ul>
+      <div class="card-actions">
+        <a href="https://www.wnyc.org/newsletter/" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://wnyc.org" target="_blank" class="website-link">wnyc.org</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ── HEALTH & WELLNESS ───────────────────────────────────────────────────── -->
+<div class="section" id="health">
+  <div class="section-header" style="border-color:#ec4899">
+    <h2 style="color:#ec4899">🏥 Health &amp; Wellness</h2>
+    <span class="badge">4 lists</span>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Equinox</div><span class="badge">8 emails</span></div>
+      <div class="sender-email">info@email.equinox.com</div>
+      <ul class="subjects"><li>New classes at your club</li><li>Member exclusive: early booking open</li></ul>
+      <div class="card-actions">
+        <a href="https://www.equinox.com" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://equinox.com" target="_blank" class="website-link">equinox.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Aaptiv</div><span class="badge">5 emails</span></div>
+      <div class="sender-email">hello@aaptiv.com</div>
+      <ul class="subjects"><li>New audio workouts this week</li><li>Your monthly fitness summary</li></ul>
+      <div class="card-actions">
+        <a href="https://aaptiv.com" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://aaptiv.com" target="_blank" class="website-link">aaptiv.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Allē (Allergan Aesthetics)</div><span class="badge">2 emails</span></div>
+      <div class="sender-email">info@info.alle.com</div>
+      <ul class="subjects"><li>Earn points on your next treatment</li></ul>
+      <div class="card-actions">
+        <a href="https://alle.com" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://alle.com" target="_blank" class="website-link">alle.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Headspace</div><span class="badge">6 emails</span></div>
+      <div class="sender-email">hello@headspace.com</div>
+      <ul class="subjects"><li>Your mindfulness streak</li><li>New sleep meditation available</li></ul>
+      <div class="card-actions">
+        <a href="https://www.headspace.com" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://headspace.com" target="_blank" class="website-link">headspace.com</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ── ENVIRONMENT & ADVOCACY ─────────────────────────────────────────────── -->
+<div class="section" id="environment">
+  <div class="section-header" style="border-color:#059669">
+    <h2 style="color:#059669">🌎 Environment &amp; Advocacy</h2>
+    <span class="badge">4 lists</span>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Sierra Club</div><span class="badge">4 emails</span></div>
+      <div class="sender-email">action@sierraclub.org</div>
+      <ul class="subjects"><li>Protect our public lands</li><li>Climate action this week</li></ul>
+      <div class="card-actions">
+        <a href="https://www.sierraclub.org/email-signup" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://sierraclub.org" target="_blank" class="website-link">sierraclub.org</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">GreenpeaceUSA</div><span class="badge">3 emails</span></div>
+      <div class="sender-email">info@greenpeace.org</div>
+      <ul class="subjects"><li>Victory: plastic ban signed into law</li><li>Take action on ocean plastics</li></ul>
+      <div class="card-actions">
+        <a href="https://www.greenpeace.org/usa/act/subscribe/" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://greenpeace.org" target="_blank" class="website-link">greenpeace.org</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">350.org</div><span class="badge">2 emails</span></div>
+      <div class="sender-email">team@350.org</div>
+      <ul class="subjects"><li>NYC climate march this Saturday</li><li>Fossil fuel divestment update</li></ul>
+      <div class="card-actions">
+        <a href="https://350.org" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://350.org" target="_blank" class="website-link">350.org</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Story of Stuff Project</div><span class="badge">2 emails</span></div>
+      <div class="sender-email">info@storyofstuff.org</div>
+      <ul class="subjects"><li>Rethinking consumption &amp; waste</li></ul>
+      <div class="card-actions">
+        <a href="https://storyofstuff.org" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://storyofstuff.org" target="_blank" class="website-link">storyofstuff.org</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ── FOOD & DINING ──────────────────────────────────────────────────────── -->
+<div class="section" id="food">
+  <div class="section-header" style="border-color:#f97316">
+    <h2 style="color:#f97316">🍽️ Food &amp; Dining</h2>
+    <span class="badge">5 lists</span>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Eater NY</div><span class="badge">16 emails</span></div>
+      <div class="sender-email">newsletter@eater.com</div>
+      <ul class="subjects"><li>The hottest new restaurant openings</li><li>Best brunch spots in Brooklyn</li></ul>
+      <div class="card-actions">
+        <a href="https://www.eater.com/pages/newsletters" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://ny.eater.com" target="_blank" class="website-link">ny.eater.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Resy</div><span class="badge">9 emails</span></div>
+      <div class="sender-email">noreply@resy.com</div>
+      <ul class="subjects"><li>Reservation available: Lilia tonight</li><li>New restaurants on Resy near you</li></ul>
+      <div class="card-actions">
+        <a href="https://resy.com" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://resy.com" target="_blank" class="website-link">resy.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Bon Appétit</div><span class="badge">12 emails</span></div>
+      <div class="sender-email">bonappetit@email.bonappetit.com</div>
+      <ul class="subjects"><li>The BA newsletter</li><li>Recipe of the day: 5-ingredient pasta</li></ul>
+      <div class="card-actions">
+        <a href="https://www.bonappetit.com/newsletter" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://bonappetit.com" target="_blank" class="website-link">bonappetit.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Goldbelly</div><span class="badge">7 emails</span></div>
+      <div class="sender-email">hello@goldbelly.com</div>
+      <ul class="subjects"><li>Famous NYC food shipped nationwide</li><li>New from Di Fara Pizza</li></ul>
+      <div class="card-actions">
+        <a href="https://www.goldbelly.com/email-signup" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://goldbelly.com" target="_blank" class="website-link">goldbelly.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Imperfect Foods</div><span class="badge">5 emails</span></div>
+      <div class="sender-email">hello@imperfectfoods.com</div>
+      <ul class="subjects"><li>Your weekly box is being packed</li><li>Add-ons available until Thursday</li></ul>
+      <div class="card-actions">
+        <a href="https://www.imperfectfoods.com" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://imperfectfoods.com" target="_blank" class="website-link">imperfectfoods.com</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ── FINANCE & UTILITIES ─────────────────────────────────────────────────── -->
+<div class="section" id="finance">
+  <div class="section-header" style="border-color:#ef4444">
+    <h2 style="color:#ef4444">💰 Finance &amp; Utilities</h2>
+    <span class="badge">6 lists</span>
+  </div>
+  <p class="section-note">⚠️ These may include important account notifications — Con Edison, Verizon, DocuSign. Consider resubscribing to any you rely on.</p>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Con Edison</div><span class="badge">3 emails</span></div>
+      <div class="sender-email">noreply@coned.com</div>
+      <ul class="subjects"><li>Your monthly bill is ready</li><li>Outage alert: planned maintenance</li></ul>
+      <div class="card-actions">
+        <a href="https://www.coned.com/en/accounts-billing/manage-your-account/notification-preferences" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://coned.com" target="_blank" class="website-link">coned.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Verizon</div><span class="badge">4 emails</span></div>
+      <div class="sender-email">info@customer.verizon.com</div>
+      <ul class="subjects"><li>Your bill is ready to view</li><li>New Fios offer in your area</li></ul>
+      <div class="card-actions">
+        <a href="https://www.verizon.com/home/myverizon/" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://verizon.com" target="_blank" class="website-link">verizon.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Rocket Money</div><span class="badge">5 emails</span></div>
+      <div class="sender-email">hello@email.rocketmoney.com</div>
+      <ul class="subjects"><li>This week's upcoming bills</li><li>New subscription detected</li></ul>
+      <div class="card-actions">
+        <a href="https://www.rocketmoney.com" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://rocketmoney.com" target="_blank" class="website-link">rocketmoney.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">DocuSign</div><span class="badge">2 emails</span></div>
+      <div class="sender-email">dse@mail.docusign.com</div>
+      <ul class="subjects"><li>You have a document to sign</li></ul>
+      <div class="card-actions">
+        <a href="https://www.docusign.com" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://docusign.com" target="_blank" class="website-link">docusign.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">MTA / OMNY</div><span class="badge">2 emails</span></div>
+      <div class="sender-email">noreply@omny.info</div>
+      <ul class="subjects"><li>Your OMNY account statement</li><li>Service alert: F train delays</li></ul>
+      <div class="card-actions">
+        <a href="https://omny.info" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://omny.info" target="_blank" class="website-link">omny.info</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">SpotHero</div><span class="badge">3 emails</span></div>
+      <div class="sender-email">info@spothero.com</div>
+      <ul class="subjects"><li>Parking deals near you this weekend</li></ul>
+      <div class="card-actions">
+        <a href="https://spothero.com" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://spothero.com" target="_blank" class="website-link">spothero.com</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ── ARTS & CULTURE ─────────────────────────────────────────────────────── -->
+<div class="section" id="arts">
+  <div class="section-header" style="border-color:#0ea5e9">
+    <h2 style="color:#0ea5e9">🎨 Arts &amp; Culture</h2>
+    <span class="badge">6 lists</span>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">MoMA</div><span class="badge">8 emails</span></div>
+      <div class="sender-email">info@moma.org</div>
+      <ul class="subjects"><li>New exhibition opening this Friday</li><li>Member preview: Picasso retrospective</li></ul>
+      <div class="card-actions">
+        <a href="https://www.moma.org/email-signup/" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://moma.org" target="_blank" class="website-link">moma.org</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">The Whitney Museum</div><span class="badge">5 emails</span></div>
+      <div class="sender-email">info@whitney.org</div>
+      <ul class="subjects"><li>Whitney Biennial 2026 is open</li><li>Free First Fridays this month</li></ul>
+      <div class="card-actions">
+        <a href="https://whitney.org/email-signup" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://whitney.org" target="_blank" class="website-link">whitney.org</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Pace Gallery</div><span class="badge">4 emails</span></div>
+      <div class="sender-email">info@pacegallery.com</div>
+      <ul class="subjects"><li>Opening reception: 510 West 25th St</li><li>Artist spotlight: new series</li></ul>
+      <div class="card-actions">
+        <a href="https://www.pacegallery.com" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://pacegallery.com" target="_blank" class="website-link">pacegallery.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Lincoln Center</div><span class="badge">6 emails</span></div>
+      <div class="sender-email">newsletter@lincolncenter.org</div>
+      <ul class="subjects"><li>Midsummer Night Swing is back</li><li>New season: NY Philharmonic</li></ul>
+      <div class="card-actions">
+        <a href="https://www.lincolncenter.org/email-signup" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://lincolncenter.org" target="_blank" class="website-link">lincolncenter.org</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Artsy</div><span class="badge">9 emails</span></div>
+      <div class="sender-email">hello@artsy.net</div>
+      <ul class="subjects"><li>Works to collect this week</li><li>Art fairs coming up: Frieze NY</li></ul>
+      <div class="card-actions">
+        <a href="https://www.artsy.net/newsletters" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://artsy.net" target="_blank" class="website-link">artsy.net</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">AXS (Event Tickets)</div><span class="badge">3 emails</span></div>
+      <div class="sender-email">info@email.axs.com</div>
+      <ul class="subjects"><li>On sale now: events near NYC</li></ul>
+      <div class="card-actions">
+        <a href="https://www.axs.com" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://axs.com" target="_blank" class="website-link">axs.com</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ── POLITICAL ───────────────────────────────────────────────────────────── -->
+<div class="section" id="political">
+  <div class="section-header" style="border-color:#6366f1">
+    <h2 style="color:#6366f1">🗳️ Political Campaigns &amp; Causes</h2>
+    <span class="badge">5 lists</span>
+  </div>
+  <p class="section-note">Unsubscribe requests have been sent for all of these. To rejoin, visit each campaign's website directly.</p>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Sen. Chuck Schumer</div><span class="badge">6 emails</span></div>
+      <div class="sender-email">info@schumer.senate.gov</div>
+      <ul class="subjects"><li>Update from Senator Schumer</li><li>New legislation this week</li></ul>
+      <div class="card-actions">
+        <a href="https://www.schumer.senate.gov/contact/sign-up-for-enewsletter" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://schumer.senate.gov" target="_blank" class="website-link">schumer.senate.gov</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">MoveOn</div><span class="badge">5 emails</span></div>
+      <div class="sender-email">moveon-help@list.moveon.org</div>
+      <ul class="subjects"><li>Congress votes Thursday — take action</li><li>New petition: 50,000 signatures</li></ul>
+      <div class="card-actions">
+        <a href="https://moveon.org" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://moveon.org" target="_blank" class="website-link">moveon.org</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">ACLU</div><span class="badge">4 emails</span></div>
+      <div class="sender-email">aclu@aclu.org</div>
+      <ul class="subjects"><li>Know your rights update</li><li>Urgent: Supreme Court ruling</li></ul>
+      <div class="card-actions">
+        <a href="https://www.aclu.org/subscribe" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://aclu.org" target="_blank" class="website-link">aclu.org</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Democratic Campaign (Example)</div><span class="badge">11 emails</span></div>
+      <div class="sender-email">info@campaignexample.com</div>
+      <ul class="subjects"><li>Will you chip in $5 before midnight?</li><li>Urgent: match deadline tonight</li></ul>
+      <div class="card-actions">
+        <a href="https://campaignexample.com" target="_blank" class="resub-btn">↩ Resubscribe</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Medicare for All</div><span class="badge">4 emails</span></div>
+      <div class="sender-email">info@passmedicareforall.org</div>
+      <ul class="subjects"><li>Healthcare campaign update</li><li>Tell your rep to co-sponsor HR 3421</li></ul>
+      <div class="card-actions">
+        <a href="https://passmedicareforall.org" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://passmedicareforall.org" target="_blank" class="website-link">passmedicareforall.org</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ── INVESTMENT NEWSLETTERS ─────────────────────────────────────────────── -->
+<div class="section" id="investment">
+  <div class="section-header" style="border-color:#64748b">
+    <h2 style="color:#64748b">📈 Financial Newsletters / Investment Spam</h2>
+    <span class="badge">10 lists</span>
+  </div>
+  <p class="section-note">⚠️ These are mostly unsolicited investment spam. Resubscribe links are not provided — it is not recommended to rejoin these lists.</p>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Market Alert Daily</div><span class="badge">24 emails</span></div>
+      <div class="sender-email">info@marketalertdaily.com</div>
+      <ul class="subjects"><li>ALERT: Drop these 5 stocks before open</li><li>$600B is flooding into ONE sector</li></ul>
+      <div class="card-actions"><span class="spam-note">Not recommended to resubscribe</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Smart Investment Roadmap</div><span class="badge">14 emails</span></div>
+      <div class="sender-email">info@smartinvestmentroadmap.com</div>
+      <ul class="subjects"><li>Add your name before this loophole closes</li><li>The 13-minute tax fix</li></ul>
+      <div class="card-actions"><span class="spam-note">Not recommended to resubscribe</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Wealth Insider</div><span class="badge">11 emails</span></div>
+      <div class="sender-email">info@wealthinsider.com</div>
+      <ul class="subjects"><li>Elon's warning: dollar disaster looms</li></ul>
+      <div class="card-actions"><span class="spam-note">Not recommended to resubscribe</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Crypto Pulse</div><span class="badge">9 emails</span></div>
+      <div class="sender-email">info@cryptopulse.com</div>
+      <ul class="subjects"><li>Bitcoin profit alert</li><li>SpaceX IPO: claim your stake today</li></ul>
+      <div class="card-actions"><span class="spam-note">Not recommended to resubscribe</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Banks Black List</div><span class="badge">5 emails</span></div>
+      <div class="sender-email">wise@shadowfinance.com</div>
+      <ul class="subjects"><li>WARNING: do you have money in these banks?!</li></ul>
+      <div class="card-actions"><span class="spam-note">Not recommended to resubscribe</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Senior Tax Exemption</div><span class="badge">6 emails</span></div>
+      <div class="sender-email">info@taxexemptionalert.com</div>
+      <ul class="subjects"><li>The 13-minute IRS fix that saved my retirement</li></ul>
+      <div class="card-actions"><span class="spam-note">Not recommended to resubscribe</span></div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ── OTHER ───────────────────────────────────────────────────────────────── -->
+<div class="section" id="other">
+  <div class="section-header" style="border-color:#9ca3af">
+    <h2 style="color:#9ca3af">❓ Other</h2>
+    <span class="badge">3 lists</span>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Facebook (Notifications)</div><span class="badge">8 emails</span></div>
+      <div class="sender-email">notification@facebookmail.com</div>
+      <ul class="subjects"><li>You have new activity</li><li>People you may know</li></ul>
+      <div class="card-actions">
+        <a href="https://www.facebook.com/settings?tab=notifications" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://facebook.com" target="_blank" class="website-link">facebook.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">LinkedIn (Notifications)</div><span class="badge">7 emails</span></div>
+      <div class="sender-email">messages-noreply@linkedin.com</div>
+      <ul class="subjects"><li>You have new connection requests</li><li>Jobs you may be interested in</li></ul>
+      <div class="card-actions">
+        <a href="https://www.linkedin.com/mypreferences/d/categories/email" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://linkedin.com" target="_blank" class="website-link">linkedin.com</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div class="sender-name">Substack (Various)</div><span class="badge">6 emails</span></div>
+      <div class="sender-email">hello@substack.com</div>
+      <ul class="subjects"><li>New posts from writers you follow</li><li>Recommended publications for you</li></ul>
+      <div class="card-actions">
+        <a href="https://substack.com/account/emails" target="_blank" class="resub-btn">↩ Resubscribe</a>
+        <a href="https://substack.com" target="_blank" class="website-link">substack.com</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
