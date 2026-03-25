@@ -4,7 +4,7 @@ Use this prompt to clean up someone's IMAP email account — removing spam, news
 
 ## Example summary
 
-The cleanup step asks for an HTML summary with categories, counts, and resubscribe links. **[Open the example summary in your browser](newsletter_summary_example.html)** (file: `newsletter_summary_example.html` in this folder).
+The cleanup step asks for an HTML summary with categories, counts, and resubscribe links. **[Open the example summary (GitHub Pages)](https://kidhack.github.io/prompts/email-cleanup/newsletter_summary_example.html)** — or open `newsletter_summary_example.html` from this folder locally.
 
 ![Email Cleanup Summary — example dashboard with stats, category filters, and newsletter cards](email-cleanup-summary-example.png)
 
