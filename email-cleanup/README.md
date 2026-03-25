@@ -6,7 +6,7 @@ Use this prompt with a coding agent to help clean up your IMAP inbox. The goal i
 
 At the end, you will get a summary with categories, counts, and resubscribe links so you can undo anything later if you want. **[Example summary](https://kidhack.github.io/prompts/email-cleanup/newsletter_summary_example.html)** — or open `newsletter_summary_example.html` from this folder locally.
 
-![Example summary with stats, category filters, and newsletter cards](email-cleanup-summary-example.png)
+<img src="email-cleanup-summary-example.png" alt="Example summary with stats, category filters, and newsletter cards" width="700" />
 
 ## How to run
 
