@@ -1,4 +1,4 @@
-# Email Cleanup · IMAP
+# Email Cleanup
 
 Use this prompt with a coding agent to help clean up your IMAP inbox. The goal is to clear out spam, newsletters, marketing, political, and social emails while keeping personal and useful service mail safe. It should unsubscribe from non-whitelisted bulk senders and create a resubscribe summary at the end.
 
