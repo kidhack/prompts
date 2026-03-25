@@ -1,25 +1,37 @@
 # Email Cleanup Prompt (IMAP)
 
-Use this when you want help cleaning up your IMAP inbox without accidentally losing anything important. The goal is to clear out spam, newsletters, marketing, political, and social emails while keeping personal and useful service mail safe.
+Use this prompt with a coding agent to help clean up your IMAP inbox. The goal is to clear out spam, newsletters, marketing, political, and social emails while keeping personal and useful service mail safe. It should unsubscribe from non-whitelisted bulk senders and create a resubscribe summary at the end.
 
-## Example summary
+## Summary
 
-At the end, you should get an HTML summary with categories, counts, and resubscribe links so you can undo anything later if you want. **[Example summary](https://kidhack.github.io/prompts/email-cleanup/newsletter_summary_example.html)** — or open `newsletter_summary_example.html` from this folder locally.
+At the end, you will get a summary with categories, counts, and resubscribe links so you can undo anything later if you want. **[Example summary](https://kidhack.github.io/prompts/email-cleanup/newsletter_summary_example.html)** — or open `newsletter_summary_example.html` from this folder locally.
 
-![Wxample summary with stats, category filters, and newsletter cards](email-cleanup-summary-example.png)
+![Example summary with stats, category filters, and newsletter cards](email-cleanup-summary-example.png)
+
+## How to run
+
+Paste the prompt below into a coding agent that can run scripts, access IMAP/SMTP, and generate files.
+
+It was tested with **Claude Cowork**, but it should also work with:
+
+- Cursor Agent
+- OpenAI Codex / ChatGPT agent with terminal access
+- Aider
+- Cline / Roo Code
+- Windsurf
+- Gemini CLI / Gemini Code Assist
 
 ---
 
 ## Before you send the prompt
 
-Before you paste this into an agent, quickly edit the bracketed placeholders so it matches your account and your preferences:
+Follow these steps before you send it:
 
-- Do not use your main email password if you can avoid it. If your provider supports app passwords, use one for this. If it does not, consider temporarily changing your account password before running this workflow, then change it again immediately afterward.
-- Replace the IMAP server, email address, password or app password, and SMTP server with your real account details.
-- Update the final email address so the summary gets sent back to you.
-- Fill in the whitelist with any senders that might look like bulk mail but are actually important to keep.
-- Remove any cleanup bullets you do not want. For example, if you want to keep political emails or social notifications, delete those lines before sending.
-- Add any extra safety rules you care about before you run it.
+1. **For security:** temporarily change your account password before sending this prompt, then change it again right after.
+2. Replace the IMAP server, email address, password, and SMTP server with your account details.
+3. Add whitelist addresses or domains.
+4. Remove or add cleanup bullets.
+5. Add any extra safety rules.
 
 If you are unsure about a sender, whitelist it first. It is much easier to delete something later than to recover an important message that was removed by mistake.
 
@@ -41,11 +53,8 @@ I need help cleaning up an IMAP email account. Here are the details:
 - Delete and unsubscribe from all social media notification emails
 - Remove spam
 
-**Senders to always keep (whitelist) — never delete or unsubscribe these:**
-- [e.g. no-reply@meetflo.com — smart home water alerts]
-- [e.g. invoices@mybank.com — bank statements]
-- [e.g. noreply@myinsurance.com — insurance updates]
-- [Add any other senders that look like bulk mail but are actually important]
+**Whitelist (comma-separated sender addresses or domains to always keep):**
+[e.g. no-reply@meetflo.com, chase.com, noreply@kaiserpermanente.org, updates.netflix.com]
 
 **Rules to follow — please be conservative:**
 - If you're not sure about an email, move it to a new "Review" folder rather than deleting it
@@ -58,9 +67,9 @@ I need help cleaning up an IMAP email account. Here are the details:
 1. Send unsubscribe requests (via List-Unsubscribe headers) for every sender that was deleted
 2. Scan the Deleted Messages folder and flag anything that looks important so I can review it
 3. Create an HTML summary of every newsletter/subscription that was unsubscribed, organized by category, with a resubscribe button/link for each one
-4. Email the HTML summary directly to [email@example.com] with the subject: "→ → READ THIS - Email cleanup summary"
+4. Email the HTML summary directly to the email address above with the subject: "→ → READ THIS - Email cleanup summary"
 
-Please use IMAP directly (Python via Desktop Commander) rather than a browser.
+Please use IMAP directly via Python or another scripting environment rather than a browser.
 ```
 
 ---
@@ -83,16 +92,16 @@ Please use IMAP directly (Python via Desktop Commander) rather than a browser.
 | Sonic.net | imap.sonic.net | smtp.sonic.net (port 587) |
 | Comcast/Xfinity | imap.comcast.net | smtp.comcast.net (port 587) |
 
-**What gets deleted vs. moved:** This is the default behavior the prompt is aiming for:
+**What gets deleted vs. moved:** This is the default behavior the prompt is aiming for as currently written. If you change the prompt, expect this behavior to change too.
 
 | Type | Action |
 |---|---|
-| Spam (X-Spam headers, spam patterns) | Deleted |
-| Social media notifications (Facebook, Instagram, LinkedIn, etc.) | Deleted + unsubscribed |
-| Political fundraising/campaign emails | Deleted + unsubscribed |
-| Unread newsletters (List-Unsubscribe header present) | Deleted + unsubscribed |
-| Unread marketing/promotional emails | Deleted + unsubscribed |
-| Read newsletters/marketing | Moved to Review |
-| Uncertain / unrecognized senders | Moved to Review |
-| Personal emails (from free mail domains, no bulk headers) | Kept |
+| Personal emails from friends and family | Kept |
+| Important service emails (utilities, banks, shipping, medical, smart home alerts) | Kept in inbox or reviewed before deletion |
+| Unsure emails | Moved to Review |
 | Read emails older than 1 month | Moved to Older |
+| Marketing/promotional emails | Deleted + unsubscribed |
+| Newsletters that are never read | Deleted + unsubscribed |
+| Political fundraising/campaign emails | Deleted + unsubscribed |
+| Social media notifications (Facebook, Instagram, LinkedIn, etc.) | Deleted + unsubscribed |
+| Spam | Removed |

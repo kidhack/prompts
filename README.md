@@ -13,4 +13,4 @@
 
 
 
-### [Email Cleanup](email-cleanup/README.md) → Clean your email inbox via IMAP using Claude Cowork.
+### [Email Cleanup](email-cleanup/README.md) → Clean your email inbox via IMAP using a coding agent.
