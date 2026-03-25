@@ -1,14 +1,27 @@
 # Email Cleanup Prompt (IMAP)
 
-Use this prompt to clean up someone's IMAP email account — removing spam, newsletters, marketing, political, and social media emails, while safely archiving personal mail.
+Use this when you want help cleaning up your IMAP inbox without accidentally losing anything important. The goal is to clear out spam, newsletters, marketing, political, and social emails while keeping personal and useful service mail safe.
 
 ## Example summary
 
-The cleanup step asks for an HTML summary with categories, counts, and resubscribe links. **[Open the example summary (GitHub Pages)](https://kidhack.github.io/prompts/email-cleanup/newsletter_summary_example.html)** — or open `newsletter_summary_example.html` from this folder locally.
+At the end, you should get an HTML summary with categories, counts, and resubscribe links so you can undo anything later if you want. **[Example summary](https://kidhack.github.io/prompts/email-cleanup/newsletter_summary_example.html)** — or open `newsletter_summary_example.html` from this folder locally.
 
-![Email Cleanup Summary — example dashboard with stats, category filters, and newsletter cards](email-cleanup-summary-example.png)
+![Wxample summary with stats, category filters, and newsletter cards](email-cleanup-summary-example.png)
 
 ---
+
+## Before you send the prompt
+
+Before you paste this into an agent, quickly edit the bracketed placeholders so it matches your account and your preferences:
+
+- Do not use your main email password if you can avoid it. If your provider supports app passwords, use one for this. If it does not, consider temporarily changing your account password before running this workflow, then change it again immediately afterward.
+- Replace the IMAP server, email address, password or app password, and SMTP server with your real account details.
+- Update the final email address so the summary gets sent back to you.
+- Fill in the whitelist with any senders that might look like bulk mail but are actually important to keep.
+- Remove any cleanup bullets you do not want. For example, if you want to keep political emails or social notifications, delete those lines before sending.
+- Add any extra safety rules you care about before you run it.
+
+If you are unsure about a sender, whitelist it first. It is much easier to delete something later than to recover an important message that was removed by mistake.
 
 ## The Prompt
 
@@ -52,14 +65,14 @@ Please use IMAP directly (Python via Desktop Commander) rather than a browser.
 
 ---
 
-## Notes for the person running this
+## Setup notes and defaults
 
-**App passwords:** If the account uses Gmail or Outlook with 2-factor authentication, a regular password won't work. You'll need an app-specific password:
+**App passwords:** If your account uses Gmail or Outlook with 2-factor authentication, your normal password usually will not work here. You will need an app-specific password:
 - Gmail: myaccount.google.com → Security → App passwords
 - Outlook: account.microsoft.com → Security → Advanced security → App passwords
 - Yahoo: account.security.yahoo.com → Generate app password
 
-**Common IMAP/SMTP servers:**
+**Common IMAP/SMTP servers:** If you are not sure what to enter, these are the usual defaults:
 
 | Provider | IMAP server | SMTP server |
 |---|---|---|
@@ -70,7 +83,7 @@ Please use IMAP directly (Python via Desktop Commander) rather than a browser.
 | Sonic.net | imap.sonic.net | smtp.sonic.net (port 587) |
 | Comcast/Xfinity | imap.comcast.net | smtp.comcast.net (port 587) |
 
-**What gets deleted vs. moved:**
+**What gets deleted vs. moved:** This is the default behavior the prompt is aiming for:
 
 | Type | Action |
 |---|---|
@@ -83,17 +96,3 @@ Please use IMAP directly (Python via Desktop Commander) rather than a browser.
 | Uncertain / unrecognized senders | Moved to Review |
 | Personal emails (from free mail domains, no bulk headers) | Kept |
 | Read emails older than 1 month | Moved to Older |
-
-**Tip — fill in the whitelist before running:**
-The whitelist section is the most important thing to get right. Bulk-mail headers are common on legitimate service emails — smart home devices, utilities, medical reminders, shipping notifications — and they'll get caught in the cleanup without a whitelist entry. Before running, think through:
-- Smart home devices (Flo by Moen, Nest, Ring, etc.)
-- Utilities (PG&E, water company, internet provider)
-- Banks and credit cards
-- Insurance companies
-- Doctors, pharmacies, or medical portals
-- Any subscription services you actually rely on (e.g. Rocket Money, DocuSign)
-
-Add the sender address or domain for each one. For example:
-> `- no-reply@meetflo.com — smart home water system alerts`
-> `- statements@chase.com — bank statements`
-> `- noreply@kaiserpermanente.org — medical appointments`
