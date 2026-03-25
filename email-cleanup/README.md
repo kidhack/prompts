@@ -1,4 +1,4 @@
-# IMAP Email Cleanup Prompt
+# Email Cleanup Prompt (IMAP)
 
 Use this prompt to clean up someone's IMAP email account — removing spam, newsletters, marketing, political, and social media emails, while safely archiving personal mail.
 
