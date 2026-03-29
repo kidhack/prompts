@@ -64,7 +64,9 @@ I need help cleaning up an IMAP email account. Here are the details:
 - For important service emails (utilities, banks, shipping, medical, smart home alerts), keep them in the inbox or ask me before deleting
 
 **After the cleanup:**
-1. Send unsubscribe requests (via List-Unsubscribe headers) for every sender that was deleted
+1. Unsubscribe from every sender that was deleted using all available methods:
+   - Click through any List-Unsubscribe URLs in a browser to complete web-based unsubscribe flows
+   - Send unsubscribe requests via List-Unsubscribe email headers where no URL is available
 2. Scan the Deleted Messages folder and flag anything that looks important so I can review it
 3. Create an HTML summary of every newsletter/subscription that was unsubscribed, organized by category, with a resubscribe button/link for each one
 4. Email the HTML summary directly to the email address above with the subject: "→ → READ THIS - Email cleanup summary"
